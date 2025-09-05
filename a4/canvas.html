@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animación de Tapa</title>
+    <style>
+        canvas {
+            border: 1px solid #0476f8;
+            background-color: rgb(195, 232, 240);
+        }
+    </style>
+    <script>
+        var tapaY = 0;       
+        var velocidad = 3;   
+        var direccion = 1;   
+
+        function animate() {
+            var canvas = document.getElementById("micanvas");
+            var context = canvas.getContext("2d");
+
+            context.clearRect(0, 0, canvas.width, canvas.height);
+
+            context.fillStyle = "brown";
+            context.fillRect(250, 400, 300, 200);
+
+            context.fillStyle = "saddlebrown"; 
+            context.fillRect(240, tapaY, 320, 40);
+
+            context.fillStyle = "white";       
+            context.font = "30px Arial";       
+            context.textAlign = "center";      
+            context.textBaseline = "middle";   
+            context.fillText("ZAPATOS", 400, 500);
+
+            tapaY += velocidad * direccion;
+            if (tapaY >= 360 || tapaY <= 0) {
+                direccion *= -1; 
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        window.onload = function() {
+            animate();
+        }
+    </script>
+</head>
+<body>
+    <canvas id="micanvas" width="800" height="600"></canvas>
+</body>
+</html>
