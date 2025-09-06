@@ -1,0 +1,137 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Key Codes</title>
+    
+  </head>
+  <style>
+    body{
+background-color: rgb(255, 255, 255);
+text-align: center;
+background-image: url(3ppl.jpg);
+    }
+    canvas{
+      background-color: rgb(255, 255, 255);
+      text-align: center;
+    }
+    aside:nth-of-type(2) {
+  color: white;
+}
+  </style>
+  <body>
+    <aside>Open debugging console in web browser and press arrow key. "Press the keys "A, B, C, D or E". </aside>
+    <canvas id="canvas" width="800" height="600"></canvas>
+
+      <script src="keycodes.js"></script>
+    <script>
+    window.onload = function () {
+    var canvas = document.getElementById("canvas");
+    var context = canvas.getContext("2d");
+   
+    context.font = "40pt Courier New";
+    context.fillStyle = 'lightblue';
+    context.textAlign = 'center';
+    context.fillText("Calico Critters", 400,300);
+
+    context.font = '24pt Courier New';
+    context.fillStyle = 'lightblue';
+    context.fontweight = 'italic'; 
+    context.textAlign = 'center';
+    
+    
+
+   
+   
+
+      function onKeyboardEvent (event) {
+        switch (event.keyCode) {
+        case keycode.LETRA_A:
+          console.log("up!");
+          context.clearRect(0,0, innerWidth, innerHeight);
+          context.drawImage(imagen, 32, -68, 736, 736);
+          context.fillText('Letra A', 400, 58);
+          context.font = '24pt Courier New';
+          context.fillStyle = 'lightblue';
+          context.fontweight = 'italic';
+          context.textAlign = 'center';
+          context.fillText('Press A, B, C, D or E', 400, 570);
+          break;
+        case keycode.LETRA_B:
+          console.log("down!");
+           context.clearRect(0,0, innerWidth, innerHeight);
+          context.drawImage(imagen2, 32, -68, 736, 736);
+          context.fillText('Letra B', 400, 58);
+          context.font = '24pt Courier New';
+          context.fillStyle = 'lightblue';
+          context.fontweight = 'italic';
+          context.textAlign = 'center';
+          context.fillText('Press A, B, C, D or E', 400, 570);
+          break;
+        case keycode.LETRA_C:
+          console.log("left!");
+          context.clearRect(0,0, innerWidth, innerHeight);
+          context.drawImage(imagen3, 32, -68, 736, 736);
+          context.fillText('Letra C', 400, 58);
+          context.font = '24pt Courier New';
+          context.fillStyle = 'lightblue';
+          context.fontweight = 'italic';
+          context.textAlign = 'center';
+          context.fillText('Press A, B, C, D or E', 400, 570);
+          break;
+        case keycode.LETRA_D:
+          console.log("right!");
+          context.clearRect(0,0, innerWidth, innerHeight);
+          context.drawImage(imagen4, 32, -68, 736, 736);
+          context.fillText('Letra D', 400, 58);
+          context.font = '24pt Courier New';
+          context.fillStyle = 'lightblue';
+          context.fontweight = 'italic';
+          context.textAlign = 'center';
+          context.fillText('Press A, B, C, D or E', 400, 570);
+          break;
+        case keycode.LETRA_E:
+          console.log("up!");
+          context.clearRect(0,0, innerWidth, innerHeight);
+          context.drawImage(imagen5, 32, -68, 736, 736);
+          context.fillText('Letra E', 400, 58);
+          context.font = '24pt Courier New';
+          context.fillStyle = 'lightblue';
+          context.fontweight = 'italic';
+          context.textAlign = 'center';
+          context.fillText('Press A, B, C, D or E', 400, 570);
+        default:
+          console.log(event.keyCode);
+        }
+      }
+ var imagen = new Image();
+    imagen.src = "meep1.png";
+    imagen.onLoad = function(){
+    context.drawImage(imagen, 32, -68, 736, 736);
+    }
+    var imagen2 = new Image();
+    imagen2.src = "meep2.png";
+    imagen2.onLoad = function(){
+    context.drawImage(imagen2, 32, -68, 736, 736);
+    }
+    var imagen3 = new Image();
+    imagen3.src = "meep3.png";
+    imagen3.onLoad = function(){
+    context.drawImage(imagen3, 32, -68, 736, 736);
+    }
+    var imagen4 = new Image();
+    imagen4.src = "meep4.png";
+    imagen4.onLoad = function(){
+    context.drawImage(imagen4, 32, -68, 736, 736);
+    }
+    var imagen5 = new Image();
+    imagen5.src = "meep5.png";
+    imagen5.onLoad = function(){
+    context.drawImage(imagen5, 32, -68, 736, 736);
+    }
+   
+      window.addEventListener('keydown', onKeyboardEvent, false);
+    };
+    </script>
+  </body>
+</html>
