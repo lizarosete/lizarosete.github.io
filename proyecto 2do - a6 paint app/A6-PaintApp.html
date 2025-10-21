@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Paint App</title>
+
+<style>
+  body {
+    font-family: sans-serif;
+    font-weight: 500;
+    text-align: center;
+    background-color: #F4F4F0;
+  }
+
+  h1 {
+    color: #3A5A40; 
+  }
+
+  #canvas {
+    border: 2px solid #ccc; 
+    cursor: crosshair;
+    margin-top: 10px;
+    background-color: #FFFFFF;
+  }
+
+  #colors {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+
+  .color-btn {
+    width: 60px;
+    height: 60px;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    box-shadow: none;
+  }
+
+  .selected {
+    outline: 3px solid #3A5A40;
+  }
+
+  #thickness-clear-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  #thickness-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+  }
+
+  /* 🎨 Botones de grosor personalizados */
+  .thickness-btn {
+    margin: 0;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    border-radius: 4px;
+    font-weight: 500;
+    color: #fff;
+    transition: transform 0.2s, background-color 0.3s;
+    box-shadow: none;
+  }
+
+  .thickness-btn:hover {
+    transform: scale(1.05);
+  }
+
+  /* Colores individuales */
+  .thickness-btn[data-thickness="2"] {
+    background-color: #3066BE; /* Azul */
+    color: #FFFFFF;
+  }
+
+  .thickness-btn[data-thickness="5"] {
+    background-color: #B4C5E4; /* Azul pastel */
+    color: #1F1F1F;
+  }
+
+  .thickness-btn[data-thickness="10"] {
+    background-color: #FBFFF1; /* Blanco suave */
+    color: #333333;
+  }
+
+  /* 🔴 Botón borrar */
+  #clear-btn {
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    border-radius: 4px;
+    font-weight: 500;
+    background-color: #9B1D20; /* Rojo vino */
+    color: #FFFFFF;
+    transition: background-color 0.3s, transform 0.2s;
+  }
+
+  #clear-btn:hover {
+    background-color: #7C1517; /* Un poco más oscuro */
+    transform: scale(1.05);
+  }
+</style>
+</head>
+<body>
+
+<h1>Paint App</h1>
+
+<div id="colors">
+  <button class="color-btn" style="background-color: #DAD7CD;" data-color="#DAD7CD" title="Verde Grisáceo Claro">Grisáceo</button>
+  <button class="color-btn" style="background-color: #A3B18A;" data-color="#A3B18A" title="Verde Oliva Claro">Oliva Claro</button>
+  <button class="color-btn" style="background-color: #588157;" data-color="#588157" title="Verde Bosque">Bosque</button>
+  <button class="color-btn" style="background-color: #3A5A40;" data-color="#3A5A40" title="Verde Pino">Pino</button>
+  <button class="color-btn" style="background-color: #344E41;" data-color="#344E41" title="Verde Oscuro">Oscuro</button>
+</div>
+
+<div id="thickness-clear-container">
+  <div id="thickness-buttons">
+    <button class="thickness-btn" data-thickness="2">Delgado</button>
+    <button class="thickness-btn" data-thickness="5">Medio</button>
+    <button class="thickness-btn" data-thickness="10">Grueso</button>
+  </div>
+  <button id="clear-btn">Borrar Todo</button>
+</div>
+
+<canvas id="canvas" width="900" height="600"></canvas>
+
+<script>
+  const canvas = document.getElementById('canvas');
+  const ctx = canvas.getContext('2d');
+
+  ctx.fillStyle = '#FFFFFF';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  let painting = false;
+  let currentColor = '#3A5A40';
+  let currentThickness = 2;
+
+  function startPosition(e) {
+    painting = true;
+    draw(e);
+  }
+
+  function finishedPosition() {
+    painting = false;
+    ctx.beginPath();
+  }
+
+  function draw(e) {
+    if (!painting) return;
+
+    const rect = canvas.getBoundingClientRect();
+    ctx.lineWidth = currentThickness;
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = currentColor;
+
+    ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
+  }
+
+  canvas.addEventListener('mousedown', startPosition);
+  canvas.addEventListener('mouseup', finishedPosition);
+  canvas.addEventListener('mouseout', finishedPosition);
+  canvas.addEventListener('mousemove', draw);
+
+  const colorButtons = document.querySelectorAll('.color-btn');
+  colorButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentColor = btn.getAttribute('data-color');
+      colorButtons.forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+    });
+  });
+
+  document.querySelector('.color-btn[data-color="#3A5A40"]').classList.add('selected');
+
+  const thicknessButtons = document.querySelectorAll('.thickness-btn');
+  thicknessButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentThickness = parseInt(btn.getAttribute('data-thickness'));
+      thicknessButtons.forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+    });
+  });
+
+  document.querySelector('.thickness-btn[data-thickness="5"]').classList.add('selected');
+
+  document.getElementById('clear-btn').addEventListener('click', () => {
+    ctx.fillStyle = '#FFFFFF';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+  });
+</script>
+
+</body>
+</html>
+
