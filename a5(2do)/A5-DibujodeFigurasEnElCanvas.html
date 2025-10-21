@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Dibujo con Canvas</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <canvas id="canvas" width="1000" height="600"></canvas>
+    <script>
+    window.onload = function () {
+        var canvas = document.getElementById('canvas');
+        var context = canvas.getContext('2d');
+
+        // FONDO BLANCO
+        context.fillStyle = "white";
+        context.fillRect(0, 0, canvas.width, canvas.height);
+
+        // CASITA
+        context.save();
+        context.lineWidth = 2;
+        context.strokeStyle = '#c19a6b';
+        context.fillStyle = 'pink';
+        context.beginPath();
+        context.moveTo(100, 350);
+        context.lineTo(100, 450);
+        context.lineTo(200, 450);
+        context.lineTo(200, 350);
+        context.closePath();
+        context.fill();
+        context.stroke();
+
+        // TECHO
+        context.fillStyle = '#c19a6b';
+        context.strokeStyle = '#c19a6b';
+        context.beginPath();
+        context.moveTo(100, 350);
+        context.lineTo(150, 300);
+        context.lineTo(200, 350);
+        context.closePath();
+        context.fill();
+        context.stroke();
+        context.restore();
+
+        // RECTÁNGULO
+        context.save();
+        context.lineWidth = 2;
+        context.strokeStyle = '#a68bb0';
+        context.fillStyle = '#6a4c93';
+        context.fillRect(300, 350, 200, 100);
+        context.strokeRect(300, 350, 200, 100);
+        context.restore();
+
+        // CÍRCULO
+        context.save();
+        context.fillStyle = "#0033cc";
+        context.strokeStyle = "#3366ff";
+        context.lineWidth = 3;
+        context.beginPath();
+        context.arc(600, 420, 50, 0, 2 * Math.PI);
+        context.fill();
+        context.stroke();
+        context.closePath();
+        context.restore();
+
+        // LUNA
+        context.save();
+        context.fillStyle = 'gold';
+        context.beginPath();
+        context.arc(850, 120, 60, 0, 2 * Math.PI);
+        context.fill();
+
+        context.globalCompositeOperation = 'destination-out';
+        context.beginPath();
+        context.arc(880, 120, 60, 0, 2 * Math.PI);
+        context.fill();
+
+        context.globalCompositeOperation = 'source-over';
+        context.restore();
+
+        // HONGO
+        context.save();
+        context.fillStyle = 'beige';
+        context.strokeStyle = 'saddlebrown';
+        context.lineWidth = 2;
+        context.fillRect(770, 500, 50, 70);
+        context.strokeRect(770, 500, 50, 70);
+
+        context.beginPath();
+        context.fillStyle = 'red';
+        context.strokeStyle = 'darkred';
+        context.lineWidth = 2;
+        context.arc(795, 500, 50, Math.PI, 2 * Math.PI);
+        context.fill();
+        context.stroke();
+        context.restore();
+
+        // ESTRELLA
+        context.save();
+        context.fillStyle = 'gold';
+        context.strokeStyle = 'orange';
+        context.lineWidth = 2;
+        context.beginPath();
+        var cx = 500, cy = 120, spikes = 5, outerRadius = 40, innerRadius = 20;
+        var rot = Math.PI / 2 * 3;
+        var step = Math.PI / spikes;
+
+        context.moveTo(cx, cy - outerRadius);
+        for (let i = 0; i < spikes; i++) {
+            let x = cx + Math.cos(rot) * outerRadius;
+            let y = cy + Math.sin(rot) * outerRadius;
+            context.lineTo(x, y);
+            rot += step;
+
+            x = cx + Math.cos(rot) * innerRadius;
+            y = cy + Math.sin(rot) * innerRadius;
+            context.lineTo(x, y);
+            rot += step;
+        }
+        context.lineTo(cx, cy - outerRadius);
+        context.closePath();
+        context.fill();
+        context.stroke();
+        context.restore();
+
+        // FIGURA LIBRE (cuadrado)
+        context.save();
+        context.fillStyle = 'hotpink';
+        context.strokeStyle = 'deeppink';
+        context.lineWidth = 3;
+
+        
+        context.fillRect(280, 210, 80, 80);
+        context.strokeRect(280, 210, 80, 80);
+
+        context.restore();
+    };
+    </script>
+</body>
+</html>
